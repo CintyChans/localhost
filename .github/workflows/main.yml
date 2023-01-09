@@ -32,12 +32,7 @@ jobs:
         with:
           name: ${{ runner.os }} pyinstaller
           path: ./py_test/dist
-          
-      - name: download-artifact   
-        uses: actions/download-artifact@v3
-        with: 
-          path: ./artifact 
- 
+
           
       - name: Create Release and Upload Release Asset
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -46,7 +41,7 @@ jobs:
           prerelease: false
           title: 'v0.0.1'
           automatic_release_tag: 'v0.0.1'
-          files: ./artifact
+          files: ./py_test/dist
           
  
 
