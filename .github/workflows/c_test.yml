@@ -1,8 +1,8 @@
-name: hosted-ninja-vcpkg_submod-autocache
+name: local_c++_test
 on: 
   push:
     branches:
-      [master]
+      [main]
 
 jobs:
   build:
