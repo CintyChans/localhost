@@ -1,32 +1,4 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@CintyChans 
-CintyChans
-/
-pyinstaller_test
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-pyinstaller_test/main.py /
-@CintyChans
-CintyChans Update main.py
-Latest commit 28ffa9a 2 weeks ago
- History
- 1 contributor
-89 lines (79 sloc)  2.23 KB
+
 
 from shapely.geometry import *
 import argparse
