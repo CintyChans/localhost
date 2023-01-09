@@ -16,23 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         
-       #安装pip以及安装第三方库
+
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt 
-          ${{python_dir}}\python.exe -m grpc_tools.protoc -I=${{ github.workspace }}/py_test --python_out=${{ github.workspace }}\py_test --grpc_python_out=${{ github.workspace }}\py_test ${{ github.workspace }}/py_test/test.proto
-          
-       # 编译test.py
-      - name: python running
-        run: ${{python_dir}}\python.exe ${{ github.workspace }}\py_test\main.py --line 2            
-       
-       #单元测试
-      - name: test
-        run: ${{python_dir}}\python.exe -m unittest  ${{ github.workspace }}\py_test\test_main.py 
-     
-       #pyinstaller打包test.py
-      - name: pyinstaller package
-        run: ${{python_dir}}\Scripts\pyinstaller.exe  -F ${{ github.workspace }}\py_test\main.py  -p ${{ github.workspace }}\py_test\
+          ${python_dir}\python.exe -m grpc_tools.protoc -I=${{ github.workspace }}/py_test --python_out=${{ github.workspace }}\py_test --grpc_python_out=${{ github.workspace }}\py_test ${{ github.workspace }}/py_test/test.proto
+          ${python_dir}\python.exe ${{ github.workspace }}\py_test\main.py --line 2            
+          ${python_dir}\python.exe -m unittest  ${{ github.workspace }}\py_test\test_main.py 
+          ${python_dir}\Scripts\pyinstaller.exe  -F ${{ github.workspace }}\py_test\main.py  -p ${{ github.workspace }}\py_test\
+        shell: cmd
           
        #上传文件
       - name: Upload Artifacts
