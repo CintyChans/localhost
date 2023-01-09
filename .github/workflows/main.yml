@@ -6,32 +6,46 @@ on:
       - "v*"
     branches: [ "main" ]
 
-
+#设置操作系统
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [windows-latest,macos-10.15,ubuntu-20.04]
       
-    runs-on: self-hosted
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3      
-
-      - name: Install dependencies 
+      - uses: actions/checkout@v3
+       #安装python
+      - name: Set up Python 3.9.13
+        uses: actions/setup-python@v4 
+        with:
+          python-version: '3.9.13'
+        
+       #安装pip以及安装第三方库
+      - name: Install dependencies
+        run: |
+          cd py_test 
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt 
+          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./test.proto
+          
+       # 编译test.py
+      - name: python running
         run: |
           cd py_test
-          conda activate cinty
-          pip install -r requirements.txt 
-          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. test.proto
-          python main.py --line 2            
+          python3 main.py --line 2            
           python -m unittest  test_main.py 
-          pyinstaller  -F main.py 
-        shell: cmd
+          pyinstaller  -F main.py -n ${{ runner.os }}_test
+     
           
        #上传文件
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} pyinstaller
-          path: ${{ github.workspace }}\py_test\dist
+          path: ./py_test/dist
           
       - name: download-artifact   
         uses: actions/download-artifact@v3
@@ -47,3 +61,5 @@ jobs:
           title: 'v0.0.1'
           automatic_release_tag: 'v0.0.1'
           files: ./artifact
+
+            
