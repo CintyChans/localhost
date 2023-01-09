@@ -1,0 +1,56 @@
+name: hosted-ninja-vcpkg_submod-autocache
+on: 
+  push:
+    branches:
+      [master]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [self-hosted]
+      
+    runs-on: ${{ matrix.os }} 
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: cmake
+        run: |
+          cd c_test
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release
+          copy C:/Windows/system32/msvcp140*  ./Release
+          copy C:/Windows/system32/vcruntime140*  ./Release
+          copy C:/Windows/system32/ucrtbase*  ./Release
+        shell: cmd
+          
+    
+      - name: 7z
+        uses:  DuckSoft/create-7z-action@v1.0
+        with:
+          pathSource: ./c_test/build/Release*
+          pathTarget: cmain.zip     
+          
+      #上传打包文件
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: c_test
+          path: cmain.zip 
+          
+      - name: download-artifact   
+        uses: actions/download-artifact@v3
+        with: 
+          path: ./artifact/
+              
+      - name: Create Release and Upload Release Asset
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: 'v0.0.3'
+          automatic_release_tag: 'v0.0.3'
+          files: ./artifact
