@@ -1,4 +1,4 @@
-name: local_c++_test
+name: c++ application
 on: 
   push:
     branches:
