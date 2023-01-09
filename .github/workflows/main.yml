@@ -18,7 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         
-       #安装pip以及安装第三方库
       - name: Install dependencies
         run: |
           cd py_test 
