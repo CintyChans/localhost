@@ -1,0 +1,57 @@
+name: Python application
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches: [ "main" ]
+env: 
+   'python_dir': D:\anaconda3\envs\cinty
+
+jobs:
+  build:
+      
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+        
+       #安装pip以及安装第三方库
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt 
+          ${{python_dir}}\python.exe -m grpc_tools.protoc -I=${{ github.workspace }}/py_test --python_out=${{ github.workspace }}\py_test --grpc_python_out=${{ github.workspace }}\py_test ${{ github.workspace }}/py_test/test.proto
+          
+       # 编译test.py
+      - name: python running
+        run: ${{python_dir}}\python.exe ${{ github.workspace }}\py_test\main.py --line 2            
+       
+       #单元测试
+      - name: test
+        run: ${{python_dir}}\python.exe -m unittest  ${{ github.workspace }}\py_test\test_main.py 
+     
+       #pyinstaller打包test.py
+      - name: pyinstaller package
+        run: ${{python_dir}}\Scripts\pyinstaller.exe  -F ${{ github.workspace }}\py_test\main.py  -p ${{ github.workspace }}\py_test\
+          
+       #上传文件
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }} pyinstaller
+          path: ${{ github.workspace }}\py_test\dist
+          
+      - name: download-artifact   
+        uses: actions/download-artifact@v3
+        with: 
+          path: ./artifact
+ 
+          
+      - name: Create Release and Upload Release Asset
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: 'v0.0.1'
+          automatic_release_tag: 'v0.0.1'
+          files: ./artifact
