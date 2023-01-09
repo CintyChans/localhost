@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
         
 
-      - name: Install dependencies
+      - name: Install dependencies 
         run: |
           ${python_dir}\python.exe -m grpc_tools.protoc -I=${{ github.workspace }}/py_test --python_out=${{ github.workspace }}\py_test --grpc_python_out=${{ github.workspace }}\py_test ${{ github.workspace }}/py_test/test.proto
           ${python_dir}\python.exe ${{ github.workspace }}\py_test\main.py --line 2            
