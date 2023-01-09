@@ -18,11 +18,12 @@ jobs:
       - name: Install dependencies 
         run: |
           cd py_test
-          D:\anaconda3\envs\cinty\Scripts\pip.exe install -r requirements.txt 
-          D:\anaconda3\envs\cinty\python.exe -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. test.proto
-          D:\anaconda3\envs\cinty\python.exe main.py --line 2            
-          D:\anaconda3\envs\cinty\python.exe -m unittest  test_main.py 
-          D:\anaconda3\envs\cinty\Scripts\pyinstaller.exe  -F main.py 
+          conda activate cinty
+          pip install -r requirements.txt 
+          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. test.proto
+          python main.py --line 2            
+          python -m unittest  test_main.py 
+          pyinstaller  -F main.py 
           
         shell: cmd
           
