@@ -22,7 +22,7 @@ jobs:
           D:\anaconda3\envs\cinty\python.exe -m grpc_tools.protoc -I.\py_test --python_out=.\py_test --grpc_python_out=.\py_test .\py_test\test.proto
           D:\anaconda3\envs\cinty\python.exe .\py_test\main.py --line 2            
           D:\anaconda3\envs\cinty\python.exe -m unittest  .\py_test\test_main.py 
-          D:\anaconda3\envs\cinty\Scripts\pyinstaller.exe  -F .\py_test\main.py  -p .\py_test\
+          D:\anaconda3\envs\cinty\Scripts\pyinstaller.exe  -F .\py_test\main.py  -o .\py_test\
         shell: cmd
           
        #上传文件
