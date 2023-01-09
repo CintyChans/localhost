@@ -23,7 +23,8 @@ jobs:
         run: |
           cd py_test 
           conda activate cinty
-          python --version
+          TIMEOUT /T 10
+          python main.py
         shell: cmd
           
  
