@@ -18,11 +18,13 @@ jobs:
 
       - name: Install dependencies 
         run: |
-          D:\anaconda3\envs\cinty\Scripts\pip.exe install -r .\py_test\requirements.txt 
-          D:\anaconda3\envs\cinty\python.exe -m grpc_tools.protoc -I.\py_test --python_out=.\py_test --grpc_python_out=.\py_test .\py_test\test.proto
-          D:\anaconda3\envs\cinty\python.exe .\py_test\main.py --line 2            
-          D:\anaconda3\envs\cinty\python.exe -m unittest  .\py_test\test_main.py 
-          D:\anaconda3\envs\cinty\Scripts\pyinstaller.exe  -F .\py_test\main.py  -o .\py_test\
+          cd py_test
+          D:\anaconda3\envs\cinty\Scripts\pip.exe install -r requirements.txt 
+          D:\anaconda3\envs\cinty\python.exe -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. test.proto
+          D:\anaconda3\envs\cinty\python.exe main.py --line 2            
+          D:\anaconda3\envs\cinty\python.exe -m unittest  test_main.py 
+          D:\anaconda3\envs\cinty\Scripts\pyinstaller.exe  -F main.py 
+          
         shell: cmd
           
        #上传文件
