@@ -18,13 +18,11 @@ jobs:
       - name: Install dependencies 
         run: |
           cd py_test
-          conda activate cinty
           pip install -r requirements.txt 
           python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. test.proto
           python main.py --line 2            
           python -m unittest  test_main.py 
           pyinstaller  -F main.py 
-          
         shell: cmd
           
        #上传文件
