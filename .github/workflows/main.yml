@@ -21,6 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd py_test 
+          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./test.proto
           C:\Users\Nooploop_test1\AppData\Local\Programs\Python\Python310\Scripts\pyinstaller.exe -F main.py
         shell: cmd
         
@@ -28,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} pyinstaller
-          path: ./py_test/py_testdist
+          path: ./py_test/dist
           
       - name: download-artifact   
         uses: actions/download-artifact@v3
