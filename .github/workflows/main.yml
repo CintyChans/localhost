@@ -18,11 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         
-      - name: Install dependencies
+      - name: run shell
         run: |
           cd py_test 
           python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./test.proto
-          C:\Users\Nooploop_test1\AppData\Local\Programs\Python\Python310\Scripts\pyinstaller.exe -F main.py
+          python main.py --line 2 
+          python -m unittest  test_main.py 
+          pyinstaller  -F main.py 
         shell: cmd
         
       - name: Upload Artifacts
@@ -42,8 +44,8 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          title: 'v0.0.3'
-          automatic_release_tag: 'v0.0.3'
+          title: 'v0.0.1'
+          automatic_release_tag: 'v0.0.1'
           files: ./artifact
           
  
