@@ -17,11 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-       #安装python
-      - name: Set up Python 3.9.13
-        uses: actions/setup-python@v4 
-        with:
-          python-version: '3.9.13'
         
        #安装pip以及安装第三方库
       - name: Install dependencies
