@@ -1,31 +1,42 @@
 name: Python application
-
 on:
   push:
     tags:
       - "v*"
     branches: [ "master" ]
-
 #设置操作系统
 jobs:
   build:
     strategy:
       matrix:
-        os: [self-hosted,windows-latest]
+        os: [self-hosted]
       
     runs-on: ${{ matrix.os }} 
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          ssh-strict: false
 
+      - name: run shell
+        run: |
+          cd py_test 
+          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./test.proto
+          python main.py --line 2 
+          python -m unittest  test_main.py 
+          pyinstaller  -F main.py 
+        shell: cmd
+        
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} pyinstaller
-          path: ./py_test
-
+          path: ./py_test/dist
+          
+      - name: Create Release and Upload Release Asset
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: 'v0.0.1'
           
           
  
