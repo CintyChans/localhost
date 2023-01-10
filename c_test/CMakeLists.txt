@@ -49,14 +49,6 @@ find_package(asio CONFIG REQUIRED)
 target_link_libraries(main PRIVATE asio asio::asio)
 target_link_libraries(test_main PRIVATE asio asio::asio)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-find_package(eclipse-paho-mqtt-c CONFIG REQUIRED)
-target_link_libraries(main PRIVATE eclipse-paho-mqtt-c::paho-mqtt3a eclipse-paho-mqtt-c::paho-mqtt3c eclipse-paho-mqtt-c::paho-mqtt3as eclipse-paho-mqtt-c::paho-mqtt3cs)
-target_link_libraries(test_main PRIVATE eclipse-paho-mqtt-c::paho-mqtt3a eclipse-paho-mqtt-c::paho-mqtt3c eclipse-paho-mqtt-c::paho-mqtt3as eclipse-paho-mqtt-c::paho-mqtt3cs)
-
-else()
-find_package(eclipse-paho-mqtt-c CONFIG REQUIRED)
-target_link_libraries(main PRIVATE eclipse-paho-mqtt-c::paho-mqtt3a-static eclipse-paho-mqtt-c::paho-mqtt3c-static eclipse-paho-mqtt-c::paho-mqtt3as-static eclipse-paho-mqtt-c::paho-mqtt3cs-static)
-target_link_libraries(test_main PRIVATE eclipse-paho-mqtt-c::paho-mqtt3a-static eclipse-paho-mqtt-c::paho-mqtt3c-static eclipse-paho-mqtt-c::paho-mqtt3as-static eclipse-paho-mqtt-c::paho-mqtt3cs-static)
-
-endif()
+find_package(PahoMqttCpp CONFIG REQUIRED)
+target_link_libraries(main PRIVATE PahoMqttCpp::paho-mqttpp3)
+target_link_libraries(test_main PRIVATE PahoMqttCpp::paho-mqttpp3)
