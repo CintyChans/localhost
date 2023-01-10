@@ -24,13 +24,13 @@ jobs:
           
       - name: copy vcdll
         run: |
-          copy C:/Windows/system32/msvcp140*  ./c_test/build/Release
-          copy C:/Windows/system32/vcruntime140*  ./c_test/build/Release
-          copy C:/Windows/system32/ucrtbase*  ./c_test/build/Release
+          copy C:\Windows\System32\msvcp140* .\c_test\build\Release\
+          copy C:\Windows\System32\vcruntime140*  .\c_test\build\Release\
+          copy C:\Windows\System32\ucrtbase*  .\c_test\build\Release\
       - name: 7z
         uses:  DuckSoft/create-7z-action@v1.0
         with:
-          pathSource: ./c_test/build/Release/*
+          pathSource: .\c_test\build\Release\*
           pathTarget: cmain.zip     
           
       #上传打包文件
@@ -43,7 +43,7 @@ jobs:
       - name: download-artifact   
         uses: actions/download-artifact@v3
         with: 
-          path: ./artifact/
+          path: .\artifact\
               
       - name: Create Release and Upload Release Asset
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -52,4 +52,4 @@ jobs:
           prerelease: false
           title: 'v0.0.3'
           automatic_release_tag: 'v0.0.3'
-          files: ./artifact
+          files: .\artifact
