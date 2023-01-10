@@ -19,31 +19,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ssh-strict: false
-        
-      - name: run shell
-        run: |
-          cd py_test 
-          python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./test.proto
-          python main.py --line 2 
-          python -m unittest  test_main.py 
-          pyinstaller  -F main.py 
-        shell: cmd
-        
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} pyinstaller
-          path: ./py_test/dist
+          path: ./py_test
 
           
-      - name: Create Release and Upload Release Asset
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          title: 'v0.0.1'
-          automatic_release_tag: 'v0.0.1'
-          files: ./py_test/dist
           
  
 
