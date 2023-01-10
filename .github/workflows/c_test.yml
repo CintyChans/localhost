@@ -20,13 +20,12 @@ jobs:
           cd build
           cmake ..
           cmake --build . --config Release
+          copy C:\Windows\System32\msvcp140* .\Release\
+          copy C:\Windows\System32\vcruntime140*  .\Release\
+          copy C:\Windows\System32\ucrtbase*  .\Release\
         shell: cmd
           
-      - name: copy vcdll
-        run: |
-          copy C:\Windows\System32\msvcp140* .\c_test\build\Release\
-          copy C:\Windows\System32\vcruntime140*  .\c_test\build\Release\
-          copy C:\Windows\System32\ucrtbase*  .\c_test\build\Release\
+
       - name: 7z
         uses:  DuckSoft/create-7z-action@v1.0
         with:
