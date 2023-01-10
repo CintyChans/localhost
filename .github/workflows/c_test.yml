@@ -53,6 +53,6 @@ jobs:
           prerelease: false
           title: 'v0.0.3'
           automatic_release_tag: 'v0.0.3'
-          files: .\artifact\c_test
+          files: .\artifact\c_test\*
           
           
