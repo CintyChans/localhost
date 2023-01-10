@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake")
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake")
 project(test)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS"${CMAKE_CXX_FLAGS} /std:c++17")
